@@ -7,6 +7,9 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.ColorRes;
+import android.support.annotation.DimenRes;
+import android.support.annotation.IntegerRes;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -20,7 +23,6 @@ import java.util.Calendar;
 public class MainActivity extends AppCompatActivity {
 
     private AlarmManager alarmManager;
-
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -51,12 +53,14 @@ public class MainActivity extends AppCompatActivity {
         });
 
         restartPlayerBtn.setOnClickListener(new OnClickListener() {
+            @Override
             public void onClick(View view) {
                 //MediaPlayer 객체가 존재하고 현재 실행중이 아닐때
                 showAlert();
             }
         });
     }
+
 
     private void playLocalAudio() throws Exception {
         //어플리케이션에 내장되 있는 자원을 호출해서 MediaPlayer객체 생성
@@ -126,6 +130,19 @@ public class MainActivity extends AppCompatActivity {
         ShokiMusicPlayer.getInstance().killMediaPlayer();
 //        killMediaPlayer();
     }
+
+    public int dimen(@DimenRes int resId) {
+        return (int) getResources().getDimension(resId);
+    }
+
+    public int color(@ColorRes int resId) {
+        return getResources().getColor(resId);
+    }
+
+    public int integer(@IntegerRes int resId) {
+        return getResources().getInteger(resId);
+    }
+
 
 //    public void killMediaPlayer() {
 //        if(mediaPlayer!=null){
