@@ -3,4 +3,15 @@
     <dimen name="pause_bar_width">48dp</dimen>
     <dimen name="pause_bar_distance">40dp</dimen>
     <dimen name="pause_bar_height">144dp</dimen>
+
+
+    <dimen name="mb_corner_radius_2">2dp</dimen>
+    <dimen name="mb_corner_radius_4">4dp</dimen>
+    <dimen name="mb_width_100">100dp</dimen>
+    <dimen name="mb_width_120">120dp</dimen>
+    <dimen name="mb_width_200">200dp</dimen>
+    <dimen name="mb_height_56">56dp</dimen>
+    <dimen name="mb_height_8">8dp</dimen>
+    <dimen name="mb_height_4">4dp</dimen>
+
 </resources>

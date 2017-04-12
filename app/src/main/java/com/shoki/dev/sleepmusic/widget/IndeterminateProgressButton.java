@@ -13,9 +13,7 @@ import android.util.AttributeSet;
 import android.view.View;
 import android.view.animation.AccelerateDecelerateInterpolator;
 import android.view.animation.AnimationUtils;
-import com.dd.morphingbutton.MorphingAnimation;
-import com.dd.morphingbutton.MorphingButton;
-import com.dd.morphingbutton.R;
+
 import com.shoki.dev.sleepmusic.R;
 
 public class IndeterminateProgressButton extends MorphingButton {

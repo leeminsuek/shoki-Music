@@ -14,7 +14,6 @@ import android.util.StateSet;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 
 import com.shoki.dev.sleepmusic.R;
 
@@ -206,14 +205,11 @@ public class MorphingButton extends android.support.v7.widget.AppCompatButton {
 
     public void setIcon(@DrawableRes final int icon) {
         // post is necessary, to make sure getWidth() doesn't return 0
-        post(new Runnable() {
-            @Override
-            public void run() {
-                Drawable drawable = getResources().getDrawable(icon);
-                int padding = (getWidth() / 2) - (drawable.getIntrinsicWidth() / 2);
-                setCompoundDrawablesWithIntrinsicBounds(icon, 0, 0, 0);
-                setPadding(padding, 0, 0, 0);
-            }
+        post(() -> {
+            Drawable drawable = getResources().getDrawable(icon);
+            int padding = (getWidth() / 2) - (drawable.getIntrinsicWidth() / 2);
+            setCompoundDrawablesWithIntrinsicBounds(icon, 0, 0, 0);
+            setPadding(padding, 0, 0, 0);
         });
     }
 

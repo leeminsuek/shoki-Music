@@ -4,18 +4,10 @@
     android:layout_height="fill_parent"
     android:orientation="vertical" >
 
-    <com.shoki.dev.sleepmusic.widget.PlayPauseView
+    <com.shoki.dev.sleepmusic.widget.MorphingButton
         android:layout_width="match_parent"
-        android:stateListAnimator="@anim/anim_btn"
-        android:layout_height="50dp">
-
-    </com.shoki.dev.sleepmusic.widget.PlayPauseView>
-
-    <Button
         android:id="@+id/startPlayerBtn"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:text="오디오 재생 시작" />
+        android:layout_height="50dp" />
 
     <Button
         android:id="@+id/restartPlayerBtn"

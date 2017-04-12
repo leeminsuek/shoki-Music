@@ -6,8 +6,6 @@ import android.graphics.Paint;
 import android.graphics.RectF;
 import android.support.annotation.NonNull;
 import android.util.AttributeSet;
-import com.dd.morphingbutton.IProgress;
-import com.dd.morphingbutton.MorphingButton;
 
 public class LinearProgressButton extends MorphingButton implements IProgress {
 
