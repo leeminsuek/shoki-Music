@@ -13,7 +13,10 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.RelativeLayout;
 
+import com.facebook.ads.AdSize;
+import com.facebook.ads.AdView;
 import com.shoki.dev.sleepmusic.widget.MorphingButton;
 
 import java.util.Calendar;
@@ -23,13 +26,15 @@ public class MainActivity extends AppCompatActivity {
 
     private AlarmManager alarmManager;
 
-    private final int PLAY = 1;
-    private final int PAUSE = 0;
-    private final int START = -1;
+    private static final int PLAY = 1;
+    private static final int PAUSE = 0;
+    private static final int START = -1;
 
-    private int state = START;
+    public static int state = START;
 
     private MorphingButton stateBtn;
+
+    private AdView adView;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -53,7 +58,35 @@ public class MainActivity extends AppCompatActivity {
             showAlert();
         });
 
-        playBtn();
+        Intent intent = getIntent();
+        if(intent != null && intent.getExtras() != null) {
+            String intentState = intent.getExtras().getString(Contants.STATE, "");
+            assert intentState != null;
+            if(intentState.equals(Contants.EX_PAUSE)) {
+                state = START;
+            }
+        }
+
+        adinit();
+        defaultBtn();
+    }
+
+    private void adinit() {
+        adView = new AdView(this, "1661645547475594_1661645704142245", AdSize.BANNER_HEIGHT_50);
+        RelativeLayout adViewContainer = (RelativeLayout) findViewById(R.id.adViewContainer);
+        adViewContainer.addView(adView);
+        adView.loadAd();
+    }
+
+    private void defaultBtn() {
+        MorphingButton.Params circle = MorphingButton.Params.create()
+                .duration(500)
+                .cornerRadius(dimen(R.dimen.mb_height_56)) // 56 dp
+                .width(dimen(R.dimen.mb_height_56)) // 56 dp
+                .height(dimen(R.dimen.mb_height_56)) // 56 dp
+                .color(color(R.color.mb_blue)) // normal state color
+                .colorPressed(color(R.color.mb_blue_dark));
+        stateBtn.morph(circle);
     }
 
     private void playBtn() {
@@ -132,7 +165,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void showAlert() {
-        AlertDialog.Builder alertBuilder = new AlertDialog.Builder(this, android.R.style.Theme_DeviceDefault_Light);
+        AlertDialog.Builder alertBuilder = new AlertDialog.Builder(this, R.style.Theme_AppCompat_Light_Dialog_Alert);
         alertBuilder.setTitle("언제쯤 폰을 재워드릴까요?");
 
         final ArrayAdapter<String> adapter = new ArrayAdapter<String>(
@@ -170,7 +203,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        ShokiMusicPlayer.getInstance().killMediaPlayer();
+//        ShokiMusicPlayer.getInstance().killMediaPlayer();
     }
 
     public int dimen(@DimenRes int resId) {

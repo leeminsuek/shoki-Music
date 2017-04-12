@@ -21,4 +21,8 @@
         android:layout_height="wrap_content"
         android:text="재생 일시중지" />
 
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:id="@+id/adViewContainer"
+        android:layout_height="wrap_content" />
 </LinearLayout>

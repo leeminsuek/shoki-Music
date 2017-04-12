@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">SleepMusic</string>
+
+    <string name="facebook.app.id">1661645547475594</string>
 </resources>
