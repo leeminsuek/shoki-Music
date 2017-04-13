@@ -6,13 +6,9 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.annotation.ColorRes;
-import android.support.annotation.DimenRes;
-import android.support.annotation.IntegerRes;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.AppCompatButton;
 import android.view.View;
-import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
 import com.afollestad.materialdialogs.MaterialDialog;
@@ -20,7 +16,6 @@ import com.bumptech.glide.Glide;
 import com.facebook.ads.AdSize;
 import com.facebook.ads.AdView;
 import com.flaviofaria.kenburnsview.KenBurnsView;
-import com.flaviofaria.kenburnsview.RandomTransitionGenerator;
 
 import java.util.Calendar;
 
@@ -91,56 +86,18 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void alarmBtn() {
-//        MorphingButton.Params circle = MorphingButton.Params.create()
-//                .duration(500)
-//                .cornerRadius(dimen(R.dimen.mb_height_56)) // 56 dp
-//                .width(dimen(R.dimen.mb_height_56)) // 56 dp
-//                .height(dimen(R.dimen.mb_height_56)) // 56 dp
-//                .color(color(R.color.mb_blue)) // normal state color
-//                .colorPressed(color(R.color.mb_blue_dark))
-//                .text("재생시간 설정");
-//        alarmBtn.morph(circle);
         alarmBtn.setText("재생시간 설정");
     }
 
     private void defaultBtn() {
-//        MorphingButton.Params circle = MorphingButton.Params.create()
-//                .duration(500)
-//                .cornerRadius(dimen(R.dimen.mb_height_56)) // 56 dp
-//                .width(dimen(R.dimen.mb_height_56)) // 56 dp
-//                .height(dimen(R.dimen.mb_height_56)) // 56 dp
-//                .color(color(R.color.mb_blue)) // normal state color
-//                .colorPressed(color(R.color.mb_blue_dark))
-//                .text("재생");
-//        stateBtn.morph(circle);
         stateBtn.setText("재생");
     }
 
     private void playBtn() {
-//        MorphingButton.Params circle = MorphingButton.Params.create()
-//                .duration(500)
-//                .cornerRadius(dimen(R.dimen.mb_height_56)) // 56 dp
-//                .width(dimen(R.dimen.mb_height_56)) // 56 dp
-//                .height(dimen(R.dimen.mb_height_56)) // 56 dp
-//                .color(color(R.color.mb_purple)) // normal state color
-//                .colorPressed(color(R.color.mb_purple_dark))
-//                .text("중지")
-//                .animationListener(() -> {
-//                    if(state == START || state == PAUSE) {
-//                        try {
-//                            if(state == START) playLocalAudio();
-//                            else restartLocalAudio();
-//                        } catch (Exception e) {
-//                            e.printStackTrace();
-//                        }
-//                        state = PLAY;
-//                    }
-//                }); // pressed state color
-//        stateBtn.morph(circle);
         stateBtn.setText("중지");
         if(state == START || state == PAUSE) {
             try {
-                if(state == START) {
+                if(state == START) {ㅇ
                     playLocalAudio();
                     showAlert();
                 }
@@ -152,25 +109,6 @@ public class MainActivity extends AppCompatActivity {
         }
     }
     private void pauseBtn() {
-//        MorphingButton.Params circle = MorphingButton.Params.create()
-//                .duration(500)
-//                .cornerRadius(dimen(R.dimen.mb_height_56)) // 56 dp
-//                .width(dimen(R.dimen.mb_height_56)) // 56 dp
-//                .height(dimen(R.dimen.mb_height_56)) // 56 dp
-//                .color(color(R.color.mb_blue)) // normal state color
-//                .colorPressed(color(R.color.mb_blue_dark))
-//                .text("재생")
-//                .animationListener(() -> {
-//                    if(state == PLAY) {
-//                        try {
-//                            pauseLocalAudio();
-//                        } catch (Exception e) {
-//                            e.printStackTrace();
-//                        }
-//                        state = PAUSE;
-//                    }
-//                }); // pressed state color
-//        stateBtn.morph(circle);
         stateBtn.setText("재생");
         if(state == PLAY) {
             try {
@@ -248,17 +186,5 @@ public class MainActivity extends AppCompatActivity {
             adView.destroy();
         }
         super.onDestroy();
-    }
-
-    public int dimen(@DimenRes int resId) {
-        return (int) getResources().getDimension(resId);
-    }
-
-    public int color(@ColorRes int resId) {
-        return getResources().getColor(resId);
-    }
-
-    public int integer(@IntegerRes int resId) {
-        return getResources().getInteger(resId);
     }
 }
