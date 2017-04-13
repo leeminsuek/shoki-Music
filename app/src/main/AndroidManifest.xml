@@ -2,7 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.shoki.dev.sleepmusic">
 
-    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.INTERNET" />
 
     <application
         android:allowBackup="true"
@@ -19,9 +19,11 @@
             </intent-filter>
         </activity>
 
-        <receiver android:name=".ShokiBroadCast" />
+        <receiver android:name=".ShokiBroadCast"/>
 
-        <meta-data android:name="com.facebook.sdk.ApplicationId" android:value="@string/facebook.app.id" />
+        <meta-data
+            android:name="com.facebook.sdk.ApplicationId"
+            android:value="@string/facebook.app.id" />
     </application>
 
 </manifest>

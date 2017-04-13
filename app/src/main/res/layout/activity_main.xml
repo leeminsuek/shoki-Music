@@ -1,28 +1,37 @@
 <?xml version="1.0"  encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
-    android:orientation="vertical" >
+    android:background="@color/colorPrimary"
+    android:layout_height="fill_parent">
 
-    <com.shoki.dev.sleepmusic.widget.MorphingButton
+    <LinearLayout
         android:layout_width="match_parent"
-        android:id="@+id/startPlayerBtn"
-        android:layout_height="50dp" />
-
-    <Button
-        android:id="@+id/restartPlayerBtn"
-        android:layout_width="fill_parent"
+        android:orientation="horizontal"
+        android:gravity="center"
+        android:layout_alignParentTop="true"
         android:layout_height="wrap_content"
-        android:text="재생 재개" />
+        android:layout_above="@+id/adViewContainer">
 
-    <Button
-        android:id="@+id/pausePlayerBtn"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:text="재생 일시중지" />
+        <android.support.v7.widget.AppCompatButton
+            android:layout_width="wrap_content"
+            android:id="@+id/startPlayerBtn"
+            style="@style/Widget.AppCompat.Button.Colored"
+            android:layout_height="wrap_content" />
+
+
+        <android.support.v7.widget.AppCompatButton
+            android:layout_width="wrap_content"
+            android:id="@+id/alarmBtn"
+            style="@style/Widget.AppCompat.Button.Colored"
+            android:layout_height="wrap_content" />
+
+    </LinearLayout>
+
 
     <RelativeLayout
         android:layout_width="wrap_content"
         android:id="@+id/adViewContainer"
+        android:layout_alignParentBottom="true"
         android:layout_height="wrap_content" />
-</LinearLayout>
+
+</RelativeLayout>

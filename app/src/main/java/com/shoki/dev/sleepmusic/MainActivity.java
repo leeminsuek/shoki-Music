@@ -11,10 +11,10 @@ import android.support.annotation.DimenRes;
 import android.support.annotation.IntegerRes;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.widget.ArrayAdapter;
-import android.widget.Button;
+import android.support.v7.widget.AppCompatButton;
 import android.widget.RelativeLayout;
 
+import com.afollestad.materialdialogs.MaterialDialog;
 import com.facebook.ads.AdSize;
 import com.facebook.ads.AdView;
 import com.shoki.dev.sleepmusic.widget.MorphingButton;
@@ -32,7 +32,7 @@ public class MainActivity extends AppCompatActivity {
 
     public static int state = START;
 
-    private MorphingButton stateBtn;
+    private AppCompatButton stateBtn, alarmBtn;
 
     private AdView adView;
 
@@ -41,9 +41,9 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        stateBtn = (MorphingButton) findViewById(R.id.startPlayerBtn);
+        stateBtn = (AppCompatButton) findViewById(R.id.startPlayerBtn);
+        alarmBtn = (AppCompatButton) findViewById(R.id.alarmBtn);
 
-        Button restartPlayerBtn = (Button) findViewById(R.id.restartPlayerBtn);
 
         alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
 
@@ -53,8 +53,7 @@ public class MainActivity extends AppCompatActivity {
             else playBtn();
         });
 
-        restartPlayerBtn.setOnClickListener(view -> {
-            //MediaPlayer 객체가 존재하고 현재 실행중이 아닐때
+        alarmBtn.setOnClickListener(view -> {
             showAlert();
         });
 
@@ -68,6 +67,7 @@ public class MainActivity extends AppCompatActivity {
         }
 
         adinit();
+        alarmBtn();
         defaultBtn();
     }
 
@@ -78,62 +78,97 @@ public class MainActivity extends AppCompatActivity {
         adView.loadAd();
     }
 
+    private void alarmBtn() {
+//        MorphingButton.Params circle = MorphingButton.Params.create()
+//                .duration(500)
+//                .cornerRadius(dimen(R.dimen.mb_height_56)) // 56 dp
+//                .width(dimen(R.dimen.mb_height_56)) // 56 dp
+//                .height(dimen(R.dimen.mb_height_56)) // 56 dp
+//                .color(color(R.color.mb_blue)) // normal state color
+//                .colorPressed(color(R.color.mb_blue_dark))
+//                .text("재생시간 설정");
+//        alarmBtn.morph(circle);
+        alarmBtn.setText("재생시간 설정");
+    }
+
     private void defaultBtn() {
-        MorphingButton.Params circle = MorphingButton.Params.create()
-                .duration(500)
-                .cornerRadius(dimen(R.dimen.mb_height_56)) // 56 dp
-                .width(dimen(R.dimen.mb_height_56)) // 56 dp
-                .height(dimen(R.dimen.mb_height_56)) // 56 dp
-                .color(color(R.color.mb_blue)) // normal state color
-                .colorPressed(color(R.color.mb_blue_dark));
-        stateBtn.morph(circle);
+//        MorphingButton.Params circle = MorphingButton.Params.create()
+//                .duration(500)
+//                .cornerRadius(dimen(R.dimen.mb_height_56)) // 56 dp
+//                .width(dimen(R.dimen.mb_height_56)) // 56 dp
+//                .height(dimen(R.dimen.mb_height_56)) // 56 dp
+//                .color(color(R.color.mb_blue)) // normal state color
+//                .colorPressed(color(R.color.mb_blue_dark))
+//                .text("재생");
+//        stateBtn.morph(circle);
+        stateBtn.setText("재생");
     }
 
     private void playBtn() {
-        MorphingButton.Params circle = MorphingButton.Params.create()
-                .duration(500)
-                .cornerRadius(dimen(R.dimen.mb_height_56)) // 56 dp
-                .width(dimen(R.dimen.mb_height_56)) // 56 dp
-                .height(dimen(R.dimen.mb_height_56)) // 56 dp
-                .color(color(R.color.mb_blue)) // normal state color
-                .colorPressed(color(R.color.mb_blue_dark))
-                .animationListener(() -> {
-                    if(state == START || state == PAUSE) {
-                        try {
-                            if(state == START) playLocalAudio();
-                            else restartLocalAudio();
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                        }
-                        state = PLAY;
-                    }
-                }); // pressed state color
-        stateBtn.morph(circle);
+//        MorphingButton.Params circle = MorphingButton.Params.create()
+//                .duration(500)
+//                .cornerRadius(dimen(R.dimen.mb_height_56)) // 56 dp
+//                .width(dimen(R.dimen.mb_height_56)) // 56 dp
+//                .height(dimen(R.dimen.mb_height_56)) // 56 dp
+//                .color(color(R.color.mb_purple)) // normal state color
+//                .colorPressed(color(R.color.mb_purple_dark))
+//                .text("중지")
+//                .animationListener(() -> {
+//                    if(state == START || state == PAUSE) {
+//                        try {
+//                            if(state == START) playLocalAudio();
+//                            else restartLocalAudio();
+//                        } catch (Exception e) {
+//                            e.printStackTrace();
+//                        }
+//                        state = PLAY;
+//                    }
+//                }); // pressed state color
+//        stateBtn.morph(circle);
+        stateBtn.setText("중지");
+        if(state == START || state == PAUSE) {
+            try {
+                if(state == START) playLocalAudio();
+                else restartLocalAudio();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            state = PLAY;
+        }
     }
     private void pauseBtn() {
-        MorphingButton.Params circle = MorphingButton.Params.create()
-                .duration(500)
-                .cornerRadius(dimen(R.dimen.mb_height_56)) // 56 dp
-                .width(dimen(R.dimen.mb_height_56)) // 56 dp
-                .height(dimen(R.dimen.mb_height_56)) // 56 dp
-                .color(color(R.color.mb_purple)) // normal state color
-                .colorPressed(color(R.color.mb_purple_dark))
-                .animationListener(() -> {
-                    if(state == PLAY) {
-                        try {
-                            pauseLocalAudio();
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                        }
-                        state = PAUSE;
-                    }
-                }); // pressed state color
-        stateBtn.morph(circle);
+//        MorphingButton.Params circle = MorphingButton.Params.create()
+//                .duration(500)
+//                .cornerRadius(dimen(R.dimen.mb_height_56)) // 56 dp
+//                .width(dimen(R.dimen.mb_height_56)) // 56 dp
+//                .height(dimen(R.dimen.mb_height_56)) // 56 dp
+//                .color(color(R.color.mb_blue)) // normal state color
+//                .colorPressed(color(R.color.mb_blue_dark))
+//                .text("재생")
+//                .animationListener(() -> {
+//                    if(state == PLAY) {
+//                        try {
+//                            pauseLocalAudio();
+//                        } catch (Exception e) {
+//                            e.printStackTrace();
+//                        }
+//                        state = PAUSE;
+//                    }
+//                }); // pressed state color
+//        stateBtn.morph(circle);
+        stateBtn.setText("재생");
+        if(state == PLAY) {
+            try {
+                pauseLocalAudio();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            state = PAUSE;
+        }
     }
 
 
     private void playLocalAudio() throws Exception {
-        //어플리케이션에 내장되 있는 자원을 호출해서 MediaPlayer객체 생성
         ShokiMusicPlayer.getInstance().createMusic(this);
     }
 
@@ -165,21 +200,11 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void showAlert() {
-        AlertDialog.Builder alertBuilder = new AlertDialog.Builder(this, R.style.Theme_AppCompat_Light_Dialog_Alert);
-        alertBuilder.setTitle("언제쯤 폰을 재워드릴까요?");
-
-        final ArrayAdapter<String> adapter = new ArrayAdapter<String>(
-                this,
-                android.R.layout.select_dialog_singlechoice);
-        adapter.add("1분 뒤");
-        adapter.add("5분 뒤");
-        adapter.add("30분 뒤");
-        adapter.add("1시간 뒤");
-        adapter.add("3시간 뒤");
-
-        alertBuilder.setAdapter(adapter,
-                (dialog, id) -> {
-                    switch (id) {
+        new MaterialDialog.Builder(this)
+                .title("언제쯤 폰을 재워드릴까요?")
+                .items("1분 뒤", "5분 뒤", "30분 뒤", "1시간 뒤", "3시간 뒤")
+                .itemsCallbackSingleChoice(-1, (dialog, view, which, text) -> {
+                    switch (which) {
                         case 0:
                             setMusicStopAlarm(Calendar.MINUTE, 1);
                             break;
@@ -196,14 +221,18 @@ public class MainActivity extends AppCompatActivity {
                             setMusicStopAlarm(Calendar.HOUR, 3);
                             break;
                     }
-                });
-        alertBuilder.show();
+                    return true;
+                })
+                .positiveText("선택")
+                .show();
 
+
+        AlertDialog.Builder alertBuilder = new AlertDialog.Builder(this, R.style.Theme_AppCompat_Dialog_Alert);
+        alertBuilder.setTitle("언제쯤 폰을 재워드릴까요?");
     }
     @Override
     protected void onDestroy() {
         super.onDestroy();
-//        ShokiMusicPlayer.getInstance().killMediaPlayer();
     }
 
     public int dimen(@DimenRes int resId) {
@@ -217,17 +246,4 @@ public class MainActivity extends AppCompatActivity {
     public int integer(@IntegerRes int resId) {
         return getResources().getInteger(resId);
     }
-
-
-//    public void killMediaPlayer() {
-//        if(mediaPlayer!=null){
-//            try{
-//                //MediaPlayer 자원해제
-//                mediaPlayer.release();
-//            }catch(Exception e){
-//                e.printStackTrace();
-//            }
-//        }
-//
-//    }
 }
