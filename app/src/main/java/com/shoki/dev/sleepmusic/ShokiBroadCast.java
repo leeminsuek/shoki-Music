@@ -12,6 +12,7 @@ public class ShokiBroadCast extends BroadcastReceiver {
 
         Intent mainIntent = new Intent(context, MainActivity.class);
         mainIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        mainIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         mainIntent.putExtra(Contants.STATE, Contants.EX_PAUSE);
         context.startActivity(mainIntent);
     }

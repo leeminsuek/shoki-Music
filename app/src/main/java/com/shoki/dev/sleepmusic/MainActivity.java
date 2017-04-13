@@ -11,6 +11,7 @@ import android.support.annotation.DimenRes;
 import android.support.annotation.IntegerRes;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.AppCompatButton;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
@@ -65,6 +66,7 @@ public class MainActivity extends AppCompatActivity {
             assert intentState != null;
             if(intentState.equals(Contants.EX_PAUSE)) {
                 state = START;
+                alarmBtn.setVisibility(View.GONE);
             }
         }
 
@@ -138,7 +140,10 @@ public class MainActivity extends AppCompatActivity {
         stateBtn.setText("중지");
         if(state == START || state == PAUSE) {
             try {
-                if(state == START) playLocalAudio();
+                if(state == START) {
+                    playLocalAudio();
+                    showAlert();
+                }
                 else restartLocalAudio();
             } catch (Exception e) {
                 e.printStackTrace();
@@ -231,6 +236,7 @@ public class MainActivity extends AppCompatActivity {
                             setMusicStopAlarm(Calendar.HOUR, 3);
                             break;
                     }
+                    alarmBtn.setVisibility(View.VISIBLE);
                     return true;
                 })
                 .positiveText("선택")
@@ -238,6 +244,9 @@ public class MainActivity extends AppCompatActivity {
     }
     @Override
     protected void onDestroy() {
+        if(adView != null) {
+            adView.destroy();
+        }
         super.onDestroy();
     }
 
