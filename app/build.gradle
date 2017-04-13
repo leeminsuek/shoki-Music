@@ -39,4 +39,7 @@ dependencies {
     compile 'com.facebook.android:audience-network-sdk:4.21.1'
 
     compile 'com.afollestad.material-dialogs:core:0.9.4.3'
+
+    compile 'com.flaviofaria:kenburnsview:1.0.7'
+    compile 'com.github.bumptech.glide:glide:3.7.0'
 }

@@ -9,15 +9,17 @@ import android.os.Bundle;
 import android.support.annotation.ColorRes;
 import android.support.annotation.DimenRes;
 import android.support.annotation.IntegerRes;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.AppCompatButton;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
 import com.afollestad.materialdialogs.MaterialDialog;
+import com.bumptech.glide.Glide;
 import com.facebook.ads.AdSize;
 import com.facebook.ads.AdView;
-import com.shoki.dev.sleepmusic.widget.MorphingButton;
+import com.flaviofaria.kenburnsview.KenBurnsView;
+import com.flaviofaria.kenburnsview.RandomTransitionGenerator;
 
 import java.util.Calendar;
 
@@ -66,9 +68,17 @@ public class MainActivity extends AppCompatActivity {
             }
         }
 
+        KenBurnsView imageView = (KenBurnsView) findViewById(R.id.bg);
         adinit();
         alarmBtn();
         defaultBtn();
+
+        Glide
+                .with(this)
+                .load(R.drawable.bg_1)
+                .centerCrop()
+                .crossFade()
+                .into(imageView);
     }
 
     private void adinit() {
@@ -225,10 +235,6 @@ public class MainActivity extends AppCompatActivity {
                 })
                 .positiveText("선택")
                 .show();
-
-
-        AlertDialog.Builder alertBuilder = new AlertDialog.Builder(this, R.style.Theme_AppCompat_Dialog_Alert);
-        alertBuilder.setTitle("언제쯤 폰을 재워드릴까요?");
     }
     @Override
     protected void onDestroy() {

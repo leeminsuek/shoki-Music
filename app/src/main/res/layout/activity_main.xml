@@ -4,6 +4,15 @@
     android:background="@color/colorPrimary"
     android:layout_height="fill_parent">
 
+    <com.flaviofaria.kenburnsview.KenBurnsView
+        android:layout_width="match_parent"
+        android:layout_alignParentTop="true"
+        android:id="@+id/bg"
+        android:scaleType="centerCrop"
+
+        android:layout_above="@+id/adViewContainer"
+        android:layout_height="match_parent" />
+
     <LinearLayout
         android:layout_width="match_parent"
         android:orientation="horizontal"
@@ -29,9 +38,9 @@
 
 
     <RelativeLayout
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:id="@+id/adViewContainer"
         android:layout_alignParentBottom="true"
-        android:layout_height="wrap_content" />
+        android:layout_height="50dp" />
 
 </RelativeLayout>
