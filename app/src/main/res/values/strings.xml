@@ -1,5 +1,17 @@
 <resources>
-    <string name="app_name">SleepMusic</string>
+    <string name="app_name">꿀잠</string>
 
     <string name="facebook.app.id">1661645547475594</string>
+
+    <string name="main.alarm.btn.txt">재생시간 설정</string>
+    <string name="main.play.btn.txt">재생</string>
+    <string name="main.pause.btn.txt">중지</string>
+
+    <string name="alert.select.txt">선택</string>
+    <string name="alert.title.txt">언제쯤 폰을 재워드릴까요?</string>
+    <string name="alert.items.1">1분 뒤</string>
+    <string name="alert.items.2">5분 뒤</string>
+    <string name="alert.items.3">30분 뒤</string>
+    <string name="alert.items.4">1시간 뒤</string>
+    <string name="alert.items.5">3시간 뒤</string>
 </resources>

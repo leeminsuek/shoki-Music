@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.StringRes;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.AppCompatButton;
 import android.view.View;
@@ -85,20 +86,23 @@ public class MainActivity extends AppCompatActivity {
         adView.loadAd();
     }
 
+    private String string(@StringRes int id) {
+        return getResources().getString(id);
+    }
+
     private void alarmBtn() {
-        alarmBtn.setText("재생시간 설정");
+        alarmBtn.setText(string(R.string.main_alarm_btn_txt));
     }
 
     private void defaultBtn() {
-        stateBtn.setText("재생");
+        stateBtn.setText(string(R.string.main_play_btn_txt));
     }
 
     private void playBtn() {
-        stateBtn.setText("중지");
+        stateBtn.setText(string(R.string.main_pause_btn_txt));
         if(state == START || state == PAUSE) {
             try {
-                if(state == START) {ㅇ
-                    playLocalAudio();
+                if(state == START) {                    playLocalAudio();
                     showAlert();
                 }
                 else restartLocalAudio();
@@ -109,7 +113,7 @@ public class MainActivity extends AppCompatActivity {
         }
     }
     private void pauseBtn() {
-        stateBtn.setText("재생");
+        stateBtn.setText(string(R.string.main_play_btn_txt));
         if(state == PLAY) {
             try {
                 pauseLocalAudio();
@@ -154,8 +158,14 @@ public class MainActivity extends AppCompatActivity {
 
     public void showAlert() {
         new MaterialDialog.Builder(this)
-                .title("언제쯤 폰을 재워드릴까요?")
-                .items("1분 뒤", "5분 뒤", "30분 뒤", "1시간 뒤", "3시간 뒤")
+                .title(string(R.string.alert_title_txt))
+                .items(
+                        string(R.string.alert_items_1),
+                        string(R.string.alert_items_2),
+                        string(R.string.alert_items_3),
+                        string(R.string.alert_items_4),
+                        string(R.string.alert_items_1)
+                )
                 .itemsCallbackSingleChoice(-1, (dialog, view, which, text) -> {
                     switch (which) {
                         case 0:
@@ -177,7 +187,7 @@ public class MainActivity extends AppCompatActivity {
                     alarmBtn.setVisibility(View.VISIBLE);
                     return true;
                 })
-                .positiveText("선택")
+                .positiveText(string(R.string.alert_select_txt))
                 .show();
     }
     @Override
