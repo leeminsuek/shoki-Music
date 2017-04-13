@@ -36,7 +36,8 @@ public class ShokiMusicPlayer {
         }
     }
     public void createMusic(Activity activity) {
-        mediaPlayer=MediaPlayer.create(activity, R.raw.videoplayback);
+        mediaPlayer=MediaPlayer.create(activity, R.raw.rain1);
+        mediaPlayer.setLooping(true);
         //MediaPlayer 객체가 가지고 있는 음악 정보를 start
         mediaPlayer.start();
     }
