@@ -139,10 +139,15 @@ public class MainActivity extends AppCompatActivity {
 
     private void restartLocalAudio() throws Exception {
         ShokiMusicPlayer.getInstance().restart();
+        showAlert();
     }
 
     private void pauseLocalAudio() throws Exception {
         ShokiMusicPlayer.getInstance().pause();
+        Intent intent = new Intent(this, ShokiBroadCast.class);
+        PendingIntent sender = PendingIntent.getBroadcast(this, 1234, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+        alarmManager.cancel(sender);
+        sender.cancel();
     }
 
     private void setMusicStopAlarm(int timerType, int timer) {
