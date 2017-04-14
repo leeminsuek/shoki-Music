@@ -9,16 +9,23 @@ import android.os.Bundle;
 import android.support.annotation.StringRes;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.AppCompatButton;
+import android.support.v7.widget.AppCompatTextView;
 import android.view.View;
 import android.widget.RelativeLayout;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.request.target.GlideDrawableImageViewTarget;
 import com.facebook.ads.AdSize;
 import com.facebook.ads.AdView;
 import com.flaviofaria.kenburnsview.KenBurnsView;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
+import java.util.Locale;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -71,12 +78,13 @@ public class MainActivity extends AppCompatActivity {
         alarmBtn();
         defaultBtn();
 
+        GlideDrawableImageViewTarget target = new GlideDrawableImageViewTarget(imageView);
         Glide
                 .with(this)
-                .load(R.drawable.bg_1)
-                .centerCrop()
-                .crossFade()
-                .into(imageView);
+                .load(R.raw.bg_3)
+                .asGif()
+                .diskCacheStrategy(DiskCacheStrategy.SOURCE)
+                .into(target.getView());
     }
 
     private void adinit() {
@@ -154,6 +162,12 @@ public class MainActivity extends AppCompatActivity {
                 alarmManager.set(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), sender);
             }
         }
+
+        AppCompatTextView textView = (AppCompatTextView) findViewById(R.id.timer_txtv);
+        Date date = new Date(calendar.getTimeInMillis());
+        DateFormat formatter = new SimpleDateFormat("yyyy/MM/dd HH:mm까지 재생됩니다.", Locale.getDefault());
+        String dateFormatted = formatter.format(date);
+        textView.setText(dateFormatted);
     }
 
     public void showAlert() {
