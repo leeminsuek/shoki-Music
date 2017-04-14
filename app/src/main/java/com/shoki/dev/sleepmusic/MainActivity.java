@@ -183,7 +183,7 @@ public class MainActivity extends AppCompatActivity {
                         string(R.string.alert_items_2),
                         string(R.string.alert_items_3),
                         string(R.string.alert_items_4),
-                        string(R.string.alert_items_1)
+                        string(R.string.alert_items_5)
                 )
                 .itemsCallbackSingleChoice(-1, (dialog, view, which, text) -> {
                     switch (which) {
