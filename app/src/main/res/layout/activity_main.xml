@@ -15,9 +15,12 @@
 
     <android.support.v7.widget.AppCompatTextView
         android:layout_width="match_parent"
-        style="@style/Widget.AppCompat.Button.Colored"
-        android:alpha="0.6"
         android:id="@+id/timer_txtv"
+        android:textStyle="bold"
+        android:textSize="18sp"
+        android:gravity="center"
+        android:background="@null"
+        android:textColor="#fff"
         android:layout_height="50dp"
         android:layout_above="@+id/container"/>
 

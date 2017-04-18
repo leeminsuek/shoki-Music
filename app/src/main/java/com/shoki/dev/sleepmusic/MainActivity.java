@@ -16,7 +16,6 @@ import android.widget.RelativeLayout;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
-import com.bumptech.glide.request.target.GlideDrawableImageViewTarget;
 import com.facebook.ads.AdSize;
 import com.facebook.ads.AdView;
 import com.flaviofaria.kenburnsview.KenBurnsView;
@@ -78,13 +77,14 @@ public class MainActivity extends AppCompatActivity {
         alarmBtn();
         defaultBtn();
 
-        GlideDrawableImageViewTarget target = new GlideDrawableImageViewTarget(imageView);
+//        GlideDrawableImageViewTarget target = new GlideDrawableImageViewTarget(imageView);
         Glide
                 .with(this)
-                .load(R.raw.bg_3)
-                .asGif()
+                .load(R.drawable.bg4)
+                .centerCrop()
+                .crossFade()
                 .diskCacheStrategy(DiskCacheStrategy.SOURCE)
-                .into(target.getView());
+                .into(imageView);
     }
 
     private void adinit() {
