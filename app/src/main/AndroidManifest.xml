@@ -21,6 +21,9 @@
             </intent-filter>
         </activity>
 
+        <activity android:name=".NativeAdActivity"
+            android:theme="@style/AppTheme.DialogTheme"/>
+
         <receiver android:name=".ShokiBroadCast" />
 
         <meta-data

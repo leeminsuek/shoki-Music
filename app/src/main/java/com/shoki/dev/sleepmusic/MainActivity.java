@@ -41,6 +41,7 @@ public class MainActivity extends AppCompatActivity {
 
     private AdView adView;
 
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -89,6 +90,7 @@ public class MainActivity extends AppCompatActivity {
         adViewContainer.addView(adView);
         adView.loadAd();
     }
+
 
     private String string(@StringRes int id) {
         return getResources().getString(id);
@@ -213,11 +215,22 @@ public class MainActivity extends AppCompatActivity {
                 .positiveText(string(R.string.alert_select_txt))
                 .show();
     }
+
+    private void startNativeAd() {
+        Intent intent = new Intent(this, NativeAdActivity.class);
+        startActivity(intent);
+    }
     @Override
     protected void onDestroy() {
         if(adView != null) {
             adView.destroy();
         }
         super.onDestroy();
+    }
+
+    @Override
+    public void onBackPressed() {
+        NativeAdActivity.showNativeAdActivity(this, this::finish);
+//        super.onBackPressed();
     }
 }
