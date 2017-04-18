@@ -62,22 +62,18 @@ public class MainActivity extends AppCompatActivity {
             showAlert();
         });
 
-        Intent intent = getIntent();
-        if(intent != null && intent.getExtras() != null) {
-            String intentState = intent.getExtras().getString(Contants.STATE, "");
-            assert intentState != null;
-            if(intentState.equals(Contants.EX_PAUSE)) {
-                state = START;
-                alarmBtn.setVisibility(View.GONE);
-            }
-        }
 
         KenBurnsView imageView = (KenBurnsView) findViewById(R.id.bg);
         adinit();
         alarmBtn();
         defaultBtn();
 
-//        GlideDrawableImageViewTarget target = new GlideDrawableImageViewTarget(imageView);
+        if(ShokiMusicPlayer.getInstance().isPlaying()) {
+            state = PLAY;
+            alarmBtn.setVisibility(View.VISIBLE);
+            stateBtn.setText(R.string.main_pause_btn_txt);
+        }
+
         Glide
                 .with(this)
                 .load(R.drawable.bg4)
@@ -110,7 +106,8 @@ public class MainActivity extends AppCompatActivity {
         stateBtn.setText(string(R.string.main_pause_btn_txt));
         if(state == START || state == PAUSE) {
             try {
-                if(state == START) {                    playLocalAudio();
+                if(state == START) {
+                    playLocalAudio();
                     showAlert();
                 }
                 else restartLocalAudio();
@@ -132,22 +129,29 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    private void createService(boolean key) {
+        Intent intent = new Intent(this, ShokiService.class);
+        intent.setAction(key? Constants.ACTION.SERVICE_START_ACTION : Constants.ACTION.SERVICE_STOP_ACTION);
+        startService(intent);
+    }
 
     private void playLocalAudio() throws Exception {
-        ShokiMusicPlayer.getInstance().createMusic(this);
+        createService(true);
     }
 
     private void restartLocalAudio() throws Exception {
-        ShokiMusicPlayer.getInstance().restart();
+        Intent intent = new Intent(this, ShokiService.class);
+        intent.setAction(Constants.ACTION.SERVICE_RESTART_ACTION);
+        startService(intent);
         showAlert();
     }
 
     private void pauseLocalAudio() throws Exception {
-        ShokiMusicPlayer.getInstance().pause();
         Intent intent = new Intent(this, ShokiBroadCast.class);
         PendingIntent sender = PendingIntent.getBroadcast(this, 1234, intent, PendingIntent.FLAG_UPDATE_CURRENT);
         alarmManager.cancel(sender);
         sender.cancel();
+        createService(false);
     }
 
     private void setMusicStopAlarm(int timerType, int timer) {

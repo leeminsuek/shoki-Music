@@ -1,6 +1,7 @@
 package com.shoki.dev.sleepmusic;
 
 import android.app.Activity;
+import android.content.Context;
 import android.media.MediaPlayer;
 
 /**
@@ -14,13 +15,13 @@ public class ShokiMusicPlayer {
     }
 
     private MediaPlayer mediaPlayer;
-    private int playbackPosition=0;
+    private int playbackPosition = 0;
 
     private ShokiMusicPlayer() {
     }
 
     public void restart() {
-        if(mediaPlayer!=null && !mediaPlayer.isPlaying()){
+        if (mediaPlayer != null && !mediaPlayer.isPlaying()) {
             //음악이 일시정지되기 직전의 position값으로 셋팅
             mediaPlayer.seekTo(playbackPosition);
             mediaPlayer.start();
@@ -28,29 +29,41 @@ public class ShokiMusicPlayer {
     }
 
     public void pause() {
-        if(mediaPlayer!=null){
+        if (mediaPlayer != null) {
             //음악을 일시 정지 시킬때 정지되기 직전의 position값 저장
             playbackPosition = mediaPlayer.getCurrentPosition();
             //일시정지
             mediaPlayer.pause();
         }
     }
-    public void createMusic(Activity activity) {
-        mediaPlayer=MediaPlayer.create(activity, R.raw.rain1);
+
+    public void createMusic(Context activity) {
+        mediaPlayer = MediaPlayer.create(activity, R.raw.rain1);
         mediaPlayer.setLooping(true);
         //MediaPlayer 객체가 가지고 있는 음악 정보를 start
         mediaPlayer.start();
     }
+
+    public boolean isPlaying() {
+        if (mediaPlayer != null) {
+            try {
+                return mediaPlayer.isPlaying();
+            } catch (Exception e) {
+                return false;
+            }
+
+        }
+        return false;
+    }
+
     public void killMediaPlayer() {
-        if(mediaPlayer!=null){
-            try{
+        if (mediaPlayer != null) {
+            try {
                 //MediaPlayer 자원해제
                 mediaPlayer.release();
-            }catch(Exception e){
+            } catch (Exception e) {
                 e.printStackTrace();
             }
         }
-
     }
-
 }
