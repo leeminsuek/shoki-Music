@@ -12,6 +12,7 @@ import android.support.v7.widget.AppCompatButton;
 import android.support.v7.widget.AppCompatTextView;
 import android.view.View;
 import android.widget.RelativeLayout;
+import android.widget.Toast;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.bumptech.glide.Glide;
@@ -157,28 +158,30 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void setMusicStopAlarm(int timerType, int timer) {
-        Intent intent = new Intent(this, ShokiBroadCast.class);
+        if(timer == 0) {
+            Toast.makeText(getApplicationContext(), "반복재생 됩니다.", Toast.LENGTH_LONG).show();
+        } else {
+            Intent intent = new Intent(this, ShokiBroadCast.class);
+            Calendar calendar = Calendar.getInstance();
+            calendar.setTimeInMillis(System.currentTimeMillis());
+            calendar.add(timerType, timer);
 
-        Calendar calendar = Calendar.getInstance();
-        calendar.setTimeInMillis(System.currentTimeMillis());
-        calendar.add(timerType, timer);
-
-        PendingIntent sender = PendingIntent.getBroadcast(this, 1234, intent, PendingIntent.FLAG_UPDATE_CURRENT);
-        if (Build.VERSION.SDK_INT >= 23)
-            alarmManager.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), sender);
-        else {
-            if (Build.VERSION.SDK_INT >= 19) {
-                alarmManager.setExact(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), sender);
-            } else {
-                alarmManager.set(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), sender);
+            PendingIntent sender = PendingIntent.getBroadcast(this, 1234, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+            if (Build.VERSION.SDK_INT >= 23)
+                alarmManager.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), sender);
+            else {
+                if (Build.VERSION.SDK_INT >= 19) {
+                    alarmManager.setExact(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), sender);
+                } else {
+                    alarmManager.set(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), sender);
+                }
             }
-        }
 
-        AppCompatTextView textView = (AppCompatTextView) findViewById(R.id.timer_txtv);
-        Date date = new Date(calendar.getTimeInMillis());
-        DateFormat formatter = new SimpleDateFormat("yyyy/MM/dd HH:mm까지 재생됩니다.", Locale.getDefault());
-        String dateFormatted = formatter.format(date);
-        textView.setText(dateFormatted);
+            Date date = new Date(calendar.getTimeInMillis());
+            DateFormat formatter = new SimpleDateFormat("yyyy/MM/dd HH:mm까지 재생됩니다.", Locale.getDefault());
+            String dateFormatted = formatter.format(date);
+            Toast.makeText(getApplicationContext(), dateFormatted, Toast.LENGTH_LONG).show();
+        }
     }
 
     public void showAlert() {
@@ -194,19 +197,19 @@ public class MainActivity extends AppCompatActivity {
                 .itemsCallbackSingleChoice(-1, (dialog, view, which, text) -> {
                     switch (which) {
                         case 0:
-                            setMusicStopAlarm(Calendar.MINUTE, 1);
-                            break;
-                        case 1:
-                            setMusicStopAlarm(Calendar.MINUTE, 5);
-                            break;
-                        case 2:
-                            setMusicStopAlarm(Calendar.MINUTE, 30);
-                            break;
-                        case 3:
                             setMusicStopAlarm(Calendar.HOUR, 1);
                             break;
-                        case 4:
+                        case 1:
                             setMusicStopAlarm(Calendar.HOUR, 3);
+                            break;
+                        case 2:
+                            setMusicStopAlarm(Calendar.HOUR, 5);
+                            break;
+                        case 3:
+                            setMusicStopAlarm(Calendar.HOUR, 8);
+                            break;
+                        case 4:
+                            setMusicStopAlarm(Calendar.HOUR, 0);
                             break;
                     }
                     alarmBtn.setVisibility(View.VISIBLE);
