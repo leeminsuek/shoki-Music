@@ -9,16 +9,15 @@ import android.os.Bundle;
 import android.support.annotation.StringRes;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.AppCompatButton;
-import android.support.v7.widget.AppCompatTextView;
 import android.view.View;
-import android.widget.RelativeLayout;
+import android.widget.FrameLayout;
 import android.widget.Toast;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
-import com.facebook.ads.AdSize;
 import com.facebook.ads.AdView;
+import com.facebook.ads.InterstitialAd;
 import com.flaviofaria.kenburnsview.KenBurnsView;
 
 import java.text.DateFormat;
@@ -26,6 +25,14 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
+
+import gun0912.tedadhelper.TedAdHelper;
+import gun0912.tedadhelper.backpress.OnBackPressListener;
+import gun0912.tedadhelper.backpress.TedBackPressDialog;
+import gun0912.tedadhelper.banner.OnBannerAdListener;
+import gun0912.tedadhelper.banner.TedAdBanner;
+import gun0912.tedadhelper.front.OnFrontAdListener;
+import gun0912.tedadhelper.front.TedAdFront;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -39,7 +46,7 @@ public class MainActivity extends AppCompatActivity {
     public static int state = START;
 
     private AppCompatButton stateBtn, alarmBtn;
-
+    //    private FaceBook
     private AdView adView;
 
 
@@ -48,6 +55,9 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+//        TedAdHelper.setAdmobTestDeviceId("725E60959378FE3BE611A2D28F4B9DF9");
+//        TedAdHelper.setFacebookTestDeviceId("c4e421ddcb9f143df943dfd8cc208481");
+
         stateBtn = (AppCompatButton) findViewById(R.id.startPlayerBtn);
         alarmBtn = (AppCompatButton) findViewById(R.id.alarmBtn);
 
@@ -55,8 +65,8 @@ public class MainActivity extends AppCompatActivity {
         alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
 
         stateBtn.setOnClickListener(view -> {
-            if(state == START) playBtn();
-            else if(state == PLAY) pauseBtn();
+            if (state == START) playBtn();
+            else if (state == PLAY) pauseBtn();
             else playBtn();
         });
 
@@ -70,7 +80,7 @@ public class MainActivity extends AppCompatActivity {
         alarmBtn();
         defaultBtn();
 
-        if(ShokiMusicPlayer.getInstance().isPlaying()) {
+        if (ShokiMusicPlayer.getInstance().isPlaying()) {
             state = PLAY;
             alarmBtn.setVisibility(View.VISIBLE);
             stateBtn.setText(R.string.main_pause_btn_txt);
@@ -86,10 +96,34 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void adinit() {
-        adView = new AdView(this, "1661645547475594_1661645704142245", AdSize.BANNER_HEIGHT_50);
-        RelativeLayout adViewContainer = (RelativeLayout) findViewById(R.id.adViewContainer);
-        adViewContainer.addView(adView);
-        adView.loadAd();
+        FrameLayout adViewContainer = (FrameLayout) findViewById(R.id.adViewContainer);
+        TedAdBanner.showBanner(
+                adViewContainer,
+                "1661645547475594_1661645704142245",
+                "ca-app-pub-2694703339687591/5631952240",
+                new Integer[]{TedAdHelper.AD_FACEBOOK, TedAdHelper.AD_ADMOB}
+                , new OnBannerAdListener() {
+                    @Override
+                    public void onError(String errorMessage) {
+
+                    }
+
+                    @Override
+                    public void onLoaded(int adType) {
+
+                    }
+
+                    @Override
+                    public void onAdClicked(int adType) {
+
+                    }
+
+                    @Override
+                    public void onFacebookAdCreated(com.facebook.ads.AdView facebookBanner) {
+                        adView = facebookBanner;
+                    }
+
+                });
     }
 
 
@@ -107,22 +141,22 @@ public class MainActivity extends AppCompatActivity {
 
     private void playBtn() {
         stateBtn.setText(string(R.string.main_pause_btn_txt));
-        if(state == START || state == PAUSE) {
+        if (state == START || state == PAUSE) {
             try {
-                if(state == START) {
+                if (state == START) {
                     playLocalAudio();
                     showAlert();
-                }
-                else restartLocalAudio();
+                } else restartLocalAudio();
             } catch (Exception e) {
                 e.printStackTrace();
             }
             state = PLAY;
         }
     }
+
     private void pauseBtn() {
         stateBtn.setText(string(R.string.main_play_btn_txt));
-        if(state == PLAY) {
+        if (state == PLAY) {
             try {
                 pauseLocalAudio();
             } catch (Exception e) {
@@ -134,7 +168,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void createService(boolean key) {
         Intent intent = new Intent(this, ShokiService.class);
-        intent.setAction(key? Constants.ACTION.SERVICE_START_ACTION : Constants.ACTION.SERVICE_STOP_ACTION);
+        intent.setAction(key ? Constants.ACTION.SERVICE_START_ACTION : Constants.ACTION.SERVICE_STOP_ACTION);
         startService(intent);
     }
 
@@ -158,7 +192,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void setMusicStopAlarm(int timerType, int timer) {
-        if(timer == 0) {
+        if (timer == 0) {
             Toast.makeText(getApplicationContext(), "반복재생 됩니다.", Toast.LENGTH_LONG).show();
         } else {
             Intent intent = new Intent(this, ShokiBroadCast.class);
@@ -181,6 +215,37 @@ public class MainActivity extends AppCompatActivity {
             DateFormat formatter = new SimpleDateFormat("yyyy/MM/dd HH:mm까지 재생됩니다.", Locale.getDefault());
             String dateFormatted = formatter.format(date);
             Toast.makeText(getApplicationContext(), dateFormatted, Toast.LENGTH_LONG).show();
+
+            TedAdFront.showFrontAD(
+                    this,
+                    "1661645547475594_1708386839468131",
+                    "ca-app-pub-2694703339687591/5009969869",
+                    new Integer[]{TedAdHelper.AD_FACEBOOK, TedAdHelper.AD_ADMOB},
+                    new OnFrontAdListener() {
+                        @Override
+                        public void onDismissed(int adType) {
+
+                        }
+
+                        @Override
+                        public void onError(String errorMessage) {
+
+                        }
+
+                        @Override
+                        public void onLoaded(int adType) {
+
+                        }
+
+                        @Override
+                        public void onAdClicked(int adType) {
+
+                        }
+
+                        @Override
+                        public void onFacebookAdCreated(InterstitialAd facebookFrontAD) {
+                        }
+                    });
         }
     }
 
@@ -219,13 +284,9 @@ public class MainActivity extends AppCompatActivity {
                 .show();
     }
 
-    private void startNativeAd() {
-        Intent intent = new Intent(this, NativeAdActivity.class);
-        startActivity(intent);
-    }
     @Override
     protected void onDestroy() {
-        if(adView != null) {
+        if (adView != null) {
             adView.destroy();
         }
         super.onDestroy();
@@ -233,7 +294,37 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        NativeAdActivity.showNativeAdActivity(this, this::finish);
+
+        TedBackPressDialog.startDialog(this,
+                getString(R.string.app_name),
+                "1661645547475594_1664082847231864",
+                "ca-app-pub-2694703339687591/5795603772",
+                new Integer[]{TedAdHelper.AD_FACEBOOK, TedAdHelper.AD_ADMOB},
+                true,
+                new OnBackPressListener() {
+                    @Override
+                    public void onReviewClick() {
+                    }
+
+                    @Override
+                    public void onFinish() {
+                        finish();
+                    }
+
+                    @Override
+                    public void onError(String errorMessage) {
+                    }
+
+                    @Override
+                    public void onLoaded(int adType) {
+                    }
+
+                    @Override
+                    public void onAdClicked(int adType) {
+                    }
+                });
+
+//        NativeAdActivity.showNativeAdActivity(this, this::finish);
 //        super.onBackPressed();
     }
 }

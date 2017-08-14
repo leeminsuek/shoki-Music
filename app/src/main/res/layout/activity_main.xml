@@ -27,7 +27,6 @@
 
         <android.support.v7.widget.AppCompatButton
             android:layout_width="wrap_content"
-            android:alpha="0.6"
             android:id="@+id/startPlayerBtn"
             style="@style/Widget.AppCompat.Button.Colored"
             android:layout_weight="1"
@@ -37,7 +36,6 @@
         <android.support.v7.widget.AppCompatButton
             android:layout_width="wrap_content"
             android:id="@+id/alarmBtn"
-            android:alpha="0.6"
             android:visibility="gone"
             android:layout_weight="1"
             style="@style/Widget.AppCompat.Button.Colored"
@@ -46,7 +44,7 @@
     </LinearLayout>
 
 
-    <RelativeLayout
+    <FrameLayout
         android:layout_width="match_parent"
         android:id="@+id/adViewContainer"
         android:layout_alignParentBottom="true"
