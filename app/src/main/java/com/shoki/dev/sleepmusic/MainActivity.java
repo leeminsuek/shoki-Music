@@ -215,38 +215,38 @@ public class MainActivity extends AppCompatActivity {
             DateFormat formatter = new SimpleDateFormat("yyyy/MM/dd HH:mm까지 재생됩니다.", Locale.getDefault());
             String dateFormatted = formatter.format(date);
             Toast.makeText(getApplicationContext(), dateFormatted, Toast.LENGTH_LONG).show();
-
-            TedAdFront.showFrontAD(
-                    this,
-                    "1661645547475594_1708386839468131",
-                    "ca-app-pub-2694703339687591/5009969869",
-                    new Integer[]{TedAdHelper.AD_FACEBOOK, TedAdHelper.AD_ADMOB},
-                    new OnFrontAdListener() {
-                        @Override
-                        public void onDismissed(int adType) {
-
-                        }
-
-                        @Override
-                        public void onError(String errorMessage) {
-
-                        }
-
-                        @Override
-                        public void onLoaded(int adType) {
-
-                        }
-
-                        @Override
-                        public void onAdClicked(int adType) {
-
-                        }
-
-                        @Override
-                        public void onFacebookAdCreated(InterstitialAd facebookFrontAD) {
-                        }
-                    });
         }
+
+        TedAdFront.showFrontAD(
+                this,
+                "1661645547475594_1708386839468131",
+                "ca-app-pub-2694703339687591/5009969869",
+                new Integer[]{TedAdHelper.AD_FACEBOOK, TedAdHelper.AD_ADMOB},
+                new OnFrontAdListener() {
+                    @Override
+                    public void onDismissed(int adType) {
+
+                    }
+
+                    @Override
+                    public void onError(String errorMessage) {
+
+                    }
+
+                    @Override
+                    public void onLoaded(int adType) {
+
+                    }
+
+                    @Override
+                    public void onAdClicked(int adType) {
+
+                    }
+
+                    @Override
+                    public void onFacebookAdCreated(InterstitialAd facebookFrontAD) {
+                    }
+                });
     }
 
     public void showAlert() {
